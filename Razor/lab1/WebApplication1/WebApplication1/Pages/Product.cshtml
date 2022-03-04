@@ -1,0 +1,32 @@
+﻿@page
+@model ProductModel
+@{
+}
+<form method="post">
+	<p>
+		<label for="name">Название товара</label><br/>
+		<input type="text" name="Product.Name" value="@Model.Product.Name"/>
+	</p>
+
+	<p>
+		<label for="price">Цена</label><br/>
+		<input type="number" name="Product.Price" value="@Model.Product.Price"/>
+	</p>
+
+	<p>
+		<input type="submit" asp-page-handler="" value="Получить скидку"/>
+	</p>
+
+	<p>
+		<label for="discont">Введите свою скидку(%)</label>
+		<input type="number" name="discount"/>
+	</p>
+
+	<p>
+		<input type="submit" asp-page-handler="Discount" value="С учетом своей скидки"/>
+	</p>
+	<p>
+		<input type="submit" asp-page-handler="BuyWithoutDiscount" value="Купить без скидки"/>
+	</p>
+</form>
+<h3>@Model.MessageResult</h3>

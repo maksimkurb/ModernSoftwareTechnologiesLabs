@@ -1,0 +1,73 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+	<div class="row">
+		<div class="col-md-4">
+			<h3>Программы кредитования</h3>
+			<table class="table table-bordered">
+				<tr>
+					<td>
+						<p>Тип кредита</p>
+					</td>
+					<td>
+						<p>
+							Период
+							кредитования
+						</p>
+					</td>
+					<td>
+						<p>Максимальная сумма</p>
+					</td>
+					<td>
+						<p>
+							Ставка%
+						</p>
+					</td>
+				</tr>
+				@foreach (var c in ViewBag.Credits)
+				{
+					<tr>
+						<td>
+							<p>@c.Head</p>
+						</td>
+						<td>
+							<p>@c.Period</p>
+						</td>
+						<td>
+							<p>@c.Sum</p>
+						</td>
+						<td>
+							<p>@c.Procent %</p>
+						</td>
+					</tr>
+				}
+			</table>
+			<p>
+				<a class="btn btn-primary"
+				   href="/Home/CreateBid">
+					Подать заявку на получение кредита
+					&raquo;
+				</a>
+			</p>
+		</div>
+	</div>
+
+
+	<div>
+		<h5>Просмотр заявителей по кредиту</h5>
+	</div>
+	<div>
+		@using (Html.BeginForm("BidSearch", "Home", FormMethod.Post, new
+		{
+			Data_Ajax = "true", Data_Ajax_Method = "post", data_ajax_update="#results"
+		}))
+		{
+			<input type="text" name="Name"/>
+			<input type="submit" value="Поиск"/>
+		}
+		<div id="results"> </div>
+	</div>
+
+</div>

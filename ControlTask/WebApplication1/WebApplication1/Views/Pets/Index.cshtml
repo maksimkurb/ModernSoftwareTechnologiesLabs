@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WebApplication1.Models.Pet>
+
+@{
+    ViewData["Title"] = "Реестр питомцев";
+	string? userId = null;
+	if (SignInManager.IsSignedIn(User))
+	{
+		var user = await UserManager.GetUserAsync(User);
+		userId = user.Id;
+	}
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+	<a asp-action="Create">Добавить питомца</a>
+</p>
+
+@if (ViewData["UserFilter"] != null)
+{
+	<p>Питомцы пользователя <strong>@ViewData["UserFilter"]</strong> | <a asp-action="Index">Перейти ко всем питомцам</a></p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+	            <a asp-action="Index" asp-route-username="@item.Owner.UserName">@Html.DisplayFor(modelItem => item.Owner.UserName)</a>
+            </td>
+            <td>
+	            <a asp-action="Details" asp-route-id="@item.Id">Подробнее</a>
+	            @if (userId != null && item.OwnerForeignKey.Equals(userId) ) {
+		            <span>
+			            | <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+			            | <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+		            </span>
+	            }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

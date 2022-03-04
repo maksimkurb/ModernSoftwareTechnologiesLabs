@@ -1,0 +1,8 @@
+﻿@{
+	ViewData["Title"] = "About";
+}
+<p>Все роли этого пользователя</p>
+@foreach (var c in @ViewBag.roles)
+{
+	<li>@c</li>
+}
